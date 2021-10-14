@@ -17,9 +17,23 @@ type Chips struct {
 	Amount uint32
 }
 
+func ContinueBetPrompt(writer io.WriteCloser, reader io.ReadCloser) (bool, error) {
+	prompt := promptui.Select{
+		Label:  "It's a tie do what do you want to do ? ",
+		Items:  []string{"Surrender", "Go to War"},
+		Stdin:  reader,
+		Stdout: writer,
+	}
+	_, result, err := prompt.Run()
+	if err != nil {
+		return false, err
+	}
+	return result == "Go to War", nil
+}
+
 //prompt to get user's bet
 //it takes reader and writer for testing purposes
-func CheepsPrompt(writer io.WriteCloser, reader io.ReadCloser,config UserConfig) (*Chips, error) {
+func ChipsPrompt(writer io.WriteCloser, reader io.ReadCloser, config UserConfig) (*Chips, error) {
 	//validate input
 	validate := func(input string) error {
 		val, err := strconv.ParseUint(input, 10, 32)
@@ -28,6 +42,9 @@ func CheepsPrompt(writer io.WriteCloser, reader io.ReadCloser,config UserConfig)
 		}
 		if uint32(val) > config.TotalChips {
 			return errors.New("you don't have that much chips")
+		}
+		if val%2 != 0 {
+			return errors.New("you have to bet even number of chips")
 		}
 		return nil
 	}

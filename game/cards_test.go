@@ -4,6 +4,7 @@ import (
 	"testing"
 )
 
+
 func TestNewDesk(t *testing.T) {
 	desk := NewDesk()
 	if len(desk.cards) != 52 {

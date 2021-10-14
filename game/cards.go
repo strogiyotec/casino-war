@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"time"
 )
 
 //card names
@@ -36,6 +37,8 @@ type Card struct {
 	rank  Rank   //what is the rank of this card
 }
 
+var TestCard = Card{color: DIAMONDS, rank: Rank{name: TWO, order: 2}}
+
 func (c Card) String() string {
 	return fmt.Sprintf("%s %s", c.rank.name, c.color)
 }
@@ -54,7 +57,7 @@ type Desk struct {
 //compare two cards
 func Compare(first, second Card) int {
 	if first.rank.order < second.rank.order {
-		return 0
+		return -1
 	}
 	if first.rank.order > second.rank.order {
 		return 1
@@ -130,6 +133,7 @@ func NewDesk() Desk {
 	cards = append(cards, Card{color: HEARTS, rank: Rank{name: ACE, order: uint(14)}})
 	cards = append(cards, Card{color: SPADES, rank: Rank{name: ACE, order: uint(14)}})
 	//Let's shuffle cards to remove order
+	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(cards), func(i, j int) { cards[i], cards[j] = cards[j], cards[i] })
 	return Desk{cards: cards}
 }
@@ -141,4 +145,12 @@ func (desk *Desk) Next() (Card, error) {
 	lastCard := desk.cards[len(desk.cards)-1]
 	desk.cards = desk.cards[:len(desk.cards)-1]
 	return lastCard, nil
+}
+
+//Fake desk for testing
+func FakeDesk() Desk {
+	var cards []Card
+	cards = append(cards, Card{color: HEARTS, rank: Rank{name: TWO, order: uint(2)}})
+	cards = append(cards, Card{color: HEARTS, rank: Rank{name: THREE, order: uint(3)}})
+	return Desk{cards: cards}
 }
