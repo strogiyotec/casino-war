@@ -41,7 +41,7 @@ func (server Server) Play(cardReader Reader, output io.Writer, toBet ContinueBet
 		),
 	)
 	if err != nil {
-		return nil
+		return err
 	}
 	compare := game.Compare(userCard, dealerCard)
 	if compare == 1 {

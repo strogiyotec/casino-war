@@ -2,9 +2,10 @@ package client
 
 import (
 	"errors"
-	"github.com/manifoldco/promptui"
 	"io"
 	"strconv"
+
+	"github.com/manifoldco/promptui"
 )
 
 //user's initial setting
@@ -19,7 +20,7 @@ type Chips struct {
 
 func ContinueBetPrompt(writer io.WriteCloser, reader io.ReadCloser) (bool, error) {
 	prompt := promptui.Select{
-		Label:  "It's a tie do what do you want to do ? ",
+		Label:  "It's a tie what do you want to do ? ",
 		Items:  []string{"Surrender", "Go to War"},
 		Stdin:  reader,
 		Stdout: writer,
