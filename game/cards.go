@@ -2,6 +2,7 @@ package game
 
 import (
 	"errors"
+	"fmt"
 	"math/rand"
 )
 
@@ -35,6 +36,10 @@ type Card struct {
 	rank  Rank   //what is the rank of this card
 }
 
+func (c Card) String() string {
+	return fmt.Sprintf("%s %s", c.rank.name, c.color)
+}
+
 //Rank representation of a card
 type Rank struct {
 	name  string //name of of a card Ex:aces
@@ -44,6 +49,17 @@ type Rank struct {
 //the desk with cards
 type Desk struct {
 	cards []Card
+}
+
+//compare two cards
+func Compare(first, second Card) int {
+	if first.rank.order < second.rank.order {
+		return 0
+	}
+	if first.rank.order > second.rank.order {
+		return 1
+	}
+	return 0
 }
 
 func NewDesk() Desk {
