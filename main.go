@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"casinowar/client"
+	"fmt"
+	"os"
+)
 
 func main() {
-	fmt.Println("Casino war")
+	config := client.UserConfig{TotalChips: 50}
+	prompt, err := client.CheepsPrompt(os.Stdin, os.Stdout, config)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(prompt)
 }
