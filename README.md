@@ -10,3 +10,6 @@ In order to build it you have to
 1. First clone it `git clone https://github.com/strogiyotec/casino-war.git`
 2. Build with docker `docker build -t casino .`
 3. Run it `docker run --rm -it casino`
+
+## Example output
+![Output](https://raw.githubusercontent.com/strogiyotec/casino-war/master/assets/example.png)
